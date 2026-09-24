@@ -4,10 +4,10 @@ import { validateResource } from "./validate.js";
 import { createItServiceRequestsSchema, updateItServiceRequestsSchema, idSchema } from "./schemas.js";
 import { authenticateToken } from "./authMiddleware.js";
 
-export const itServiceRequestsRoutes = Router();
+export const ServiceRoutes = Router();
 
 // GET
-itServiceRequestsRoutes.get("/", async (req: Request, res: Response) => {
+ServiceRoutes.get("/", async (req: Request, res: Response) => {
   const { search } = req.query;
 
   try {
@@ -29,7 +29,7 @@ itServiceRequestsRoutes.get("/", async (req: Request, res: Response) => {
 });
 
 // POST
-itServiceRequestsRoutes.post("/", authenticateToken, validateResource(createItServiceRequestsSchema), async (req: Request, res: Response) => {
+ServiceRoutes.post("/", authenticateToken, validateResource(createItServiceRequestsSchema), async (req: Request, res: Response) => {
   const { requester_name, title, description, priority, status } = req.body;
 
   try {
@@ -44,7 +44,7 @@ itServiceRequestsRoutes.post("/", authenticateToken, validateResource(createItSe
 });
 
 // PUT
-itServiceRequestsRoutes.put("/:id", authenticateToken, validateResource(updateItServiceRequestsSchema), async (req: Request, res: Response) => {
+ServiceRoutes.put("/:id", authenticateToken, validateResource(updateItServiceRequestsSchema), async (req: Request, res: Response) => {
   const { id } = req.params;
   const { requester_name, title, description, priority, status } = req.body;
 
@@ -81,7 +81,7 @@ itServiceRequestsRoutes.put("/:id", authenticateToken, validateResource(updateIt
 });
 
 // DELETE
-itServiceRequestsRoutes.delete("/:id", authenticateToken, validateResource(idSchema), async (req: Request, res: Response) => {
+ServiceRoutes.delete("/:id", authenticateToken, validateResource(idSchema), async (req: Request, res: Response) => {
   const { id } = req.params;
 
   try {
