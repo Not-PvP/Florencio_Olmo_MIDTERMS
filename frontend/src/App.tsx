@@ -18,7 +18,6 @@ function MainApp() {
           <button onClick={() => authContext.dispatch({ type: "LOGOUT" })}>Sign Out</button>
           <ServiceForm editing={editing} onDone={() => setEditing(null)} />
           <hr />
-          <ServiceList onEdit={setEditing} />
         </>
       ) : (
         <AuthForm />
