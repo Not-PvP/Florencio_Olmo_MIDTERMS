@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { ServiceContext } from "../context/ServiceContext";
-import { createService, updateService } from "../api/serverRequest";
+import { createService, updateService } from "../api/serviceRequest";
 import type { Microservice } from "../types";
 
 export const ServiceForm = ({ editing, onDone }: { editing: Microservice | null; onDone: () => void }) => {

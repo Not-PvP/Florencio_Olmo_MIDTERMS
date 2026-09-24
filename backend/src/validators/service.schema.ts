@@ -1,7 +1,11 @@
 import { z } from "zod";
 
+export const loginSchema = z.object({
+email: z.string().email(),
+password: z.string().min(6),
+});
+
 export const createServiceSchema = z.object({
-  // TODO: define validated create-incident fields
   name: z.string().min(3).max(60),
   endpointUrl: z.string(),
   environment: z.enum(["DEVELOPMENT", "STAGING", "PRODUCTION"]),
@@ -10,7 +14,6 @@ export const createServiceSchema = z.object({
 });
 
 export const updateServiceSchema = z.object({
-  // TODO: define validated update-incident fields (status/severity)
   name: z.string().min(3).max(60).optional(),
   endpointUrl: z.string().optional(),
   environment: z.enum(["DEVELOPMENT", "STAGING", "PRODUCTION"]).optional(),
