@@ -35,6 +35,8 @@ function ServiceReducer(state: State, action: Action): State {
       return { ...state, error: null, services: state.services.filter((i) => i.id !== action.payload) };
     case "SET_ERROR":
       return { ...state, loading: false, error: action.payload };
+    case "FETCH_START":
+      return { ...state, loading: true, error: null };
     default:
       return state;
   }

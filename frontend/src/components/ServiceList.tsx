@@ -33,7 +33,7 @@ export const IncidentList: React.FC = () => {
     loadIncidents();
   }, [dispatch]);
 
-  const handleUpdate = async (id: number, changes: Partial<Pick<Microservice, "environment" | "status">>) => {
+  const handleUpdate = async (id: string, changes: Partial<Pick<Microservice, "environment" | "status">>) => {
     try {
       const updated = await updateService(id, changes);
       dispatch({ type: "UPDATE_SERVICE_SUCCESS", payload: updated });
