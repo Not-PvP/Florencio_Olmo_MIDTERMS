@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { pool } from "./db.ts";
-import { validateResource } from "./validate";
+import { pool } from "./db.js";
+import { validateResource } from "./validate.js";
 import { Router, Request, Response } from "express";
-import { authRequestSchema } from "./auth.schemas.ts";
+import { authRequestSchema } from "./schemas.js";
 
 const router = Router();
 const JWT_SECRET = process.env.JWT_SECRET || "fallback_secret";

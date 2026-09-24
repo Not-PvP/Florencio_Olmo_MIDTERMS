@@ -1,10 +1,19 @@
-import { Router } from "express";
-import authRoutes from "../authRoutes";
-import incidentRoutes from "./service.routes";
+import express from "express";
+import { itServiceRequestsRoutes } from "./itServiceRequestsRoutes.js";
+import dotenv from "dotenv";
+import authRoutes from "./authRoutes.js";
+import cors from "cors";
 
-const router = Router();
+dotenv.config();
 
-router.use("/auth", authRoutes);
-router.use("/service", incidentRoutes);
+const app = express();
+app.use(cors());
+const PORT = process.env.PORT || 3000;
 
-export default router;
+app.use(express.json());
+app.use("/api/it_service_requests", itServiceRequestsRoutes);
+app.use("/api/auth", authRoutes);
+
+app.listen(PORT, () => {
+  console.log(`IT Service Request API server running on http://localhost:${PORT}`);
+});

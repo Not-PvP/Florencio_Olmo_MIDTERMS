@@ -1,29 +1,11 @@
-export interface User {
-  id: string;
-  email: string;
-  passwordHash: string;
-  role: 'DEVELOPER' | 'LEAD';
+import "express";
+
+declare global {
+  namespace Express {
+    interface Request {
+      user?: { userId: number; username: string };
+    }
+  }
 }
 
-export type Environment = 'DEVELOPMENT' | 'STAGING' | 'PRODUCTION';
-export type ServiceStatus = 'HEALTHY' | 'DEGRADED' | 'DOWN';
-
-export interface Microservice {
-id: string;
-name: string;
-endpointUrl: string;
-environment: Environment;
-status: ServiceStatus;
-version: string;
-ownerEmail: string;
-createdAt: string;
-}
-
-export interface JwtPayload {
-  id: string;
-  email: string;
-}
-
-export interface AuthenticatedRequest extends Request {
-  user?: JwtPayload;
-}
+export {};
