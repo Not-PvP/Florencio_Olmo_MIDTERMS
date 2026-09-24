@@ -57,44 +57,39 @@ export const IncidentList: React.FC = () => {
 
   return (
     <Grid>
-      {state.services.map((incident) => (
-        <Card key={incident.id} $severity={incident.severity}>
-          <h4>{incident.title}</h4>
-          <p>{incident.description}</p>
-          <Muted>
-            by {incident.reporter_email ?? "unknown"}
-            {incident.created_at && ` • ${new Date(incident.created_at).toLocaleString()}`}
-          </Muted>
+      {state.services.map((service) => (
+        <Card key={service.id} $environment={service.environment}>
+          <h4>{service.name}</h4>
+=
 
           <Row>
             <label>
-              <Muted>Severity</Muted>
+              <Muted>Environment</Muted>
               <br />
               <Select
-                value={incident.severity}
-                onChange={(e) => handleUpdate(incident.id, { severity: e.target.value as Incident["severity"] })}
+                value={service.environment}
+                onChange={(e) => handleUpdate(service.id, { environment: e.target.value as Microservice["environment"] })}
               >
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-                <option value="critical">Critical</option>
+                <option value="development">Development</option>
+                <option value="staging">Staging</option>
+                <option value="production">Production</option>
               </Select>
             </label>
             <label>
               <Muted>Status</Muted>
               <br />
               <Select
-                value={incident.status}
-                onChange={(e) => handleUpdate(incident.id, { status: e.target.value as Incident["status"] })}
+                value={service.status}
+                onChange={(e) => handleUpdate(service.id, { status: e.target.value as Microservice["status"] })}
               >
-                <option value="open">Open</option>
-                <option value="in_progress">In progress</option>
-                <option value="resolved">Resolved</option>
+                <option value="healthy">Healthy</option>
+                <option value="degraded">Degraded</option>
+                <option value="down">Down</option>
               </Select>
             </label>
           </Row>
 
-          <Button $variant="danger" onClick={() => handleDelete(incident.id)}>
+          <Button $variant="danger" onClick={() => handleDelete(service.id)}>
             Delete
           </Button>
         </Card>

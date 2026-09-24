@@ -4,10 +4,10 @@ import {
   deleteService,
   getService,
   updateService,
-} from "../controllers/incident.controller";
+} from "../controllers/backend.controller";
 import { requireAuth } from "../middlewares/auth.middleware";
 import { validate } from "../middlewares/validate.middleware";
-import { createServiceSchema, updateServiceSchema } from "../validators/incident.schema";
+import { createServiceSchema, updateServiceSchema } from "../validators/service.schema";
 
 const router = Router();
 

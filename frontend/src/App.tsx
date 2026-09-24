@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { IncidentProvider } from "./context/IncidentContext";
+import { IncidentProvider } from "./context/ServiceContext";
 import IncidentsPage from "./pages/IncidentsPage";
 import LoginPage from "./pages/LoginPage";
 
