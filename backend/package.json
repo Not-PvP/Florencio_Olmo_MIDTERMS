@@ -1,7 +1,6 @@
 {
   "name": "rest-api-crud",
   "version": "1.0.0",
-  "description": "",
   "main": "dist/server.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
@@ -33,6 +32,8 @@
     "@types/node": "^26.6.2",
     "@types/pg": "^8.23.1",
     "ts-node-dev": "^2.0.0",
+    "tsx": "^4.23.15",
     "typescript": "^5.9.3"
-  }
+  },
+  "description": ""
 }

@@ -5,6 +5,6 @@ import incidentRoutes from "./incident.routes";
 const router = Router();
 
 router.use("/auth", authRoutes);
-router.use("/incidents", incidentRoutes);
+router.use("/service", incidentRoutes);
 
 export default router;

@@ -1,24 +1,29 @@
 export interface User {
   id: string;
   email: string;
-  password: string;
+  passwordHash: string;
+  role: 'DEVELOPER' | 'LEAD';
 }
 
-export type IncidentStatus = "open" | "in_progress" | "resolved";
-export type IncidentSeverity = "low" | "medium" | "high" | "critical";
+export type Environment = 'DEVELOPMENT' | 'STAGING' | 'PRODUCTION';
+export type ServiceStatus = 'HEALTHY' | 'DEGRADED' | 'DOWN';
 
-export interface Incident {
-  id: string;
-  title: string;
-  description: string;
-  status: IncidentStatus;
-  severity: IncidentSeverity;
-  createdBy: string;
-  createdAt: string;
-  updatedAt: string;
+export interface Microservice {
+id: string;
+name: string;
+endpointUrl: string;
+environment: Environment;
+status: ServiceStatus;
+version: string;
+ownerEmail: string;
+createdAt: string;
 }
 
 export interface JwtPayload {
   id: string;
   email: string;
+}
+
+export interface AuthenticatedRequest extends Request {
+  user?: JwtPayload;
 }

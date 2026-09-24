@@ -1,11 +1,28 @@
-import { NextFunction, Request, Response } from "express";
-import { JwtPayload } from "../types";
+import { Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
+import { AuthenticatedRequest, JwtPayload } from '../types';
 
-export interface AuthRequest extends Request {
-  user?: JwtPayload;
-}
+const JWT_SECRET = process.env.JWT_SECRET || 'super-secret-jwt-key';
 
-export function requireAuth(req: AuthRequest, res: Response, next: NextFunction) {
-  // TODO: read Authorization header, verify JWT, attach req.user, else 401
-  next();
-}
+export const requireAuth = (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+): void => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    res.status(401).json({ message: 'Authentication token required' });
+    return;
+  }
+
+  const token = authHeader.split(' ')[1];
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
+    req.user = decoded;
+    next();
+  } catch (error) {
+    res.status(403).json({ message: 'Invalid or expired token' });
+  }
+};
