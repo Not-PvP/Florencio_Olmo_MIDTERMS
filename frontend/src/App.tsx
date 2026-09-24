@@ -1,20 +1,38 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { IncidentProvider } from "./context/ServiceContext";
-import IncidentsPage from "./pages/IncidentsPage";
-import LoginPage from "./pages/LoginPage";
+import { useContext, useState } from "react";
+import { AuthContext, AuthProvider } from "./context/AuthContext";
+import { ServiceProvider } from "./context/ServiceContext";
+import { AuthForm } from "./components/AuthForm";
+import { ServiceForm } from "./components/ServiceForm";
+import { ServiceList } from "./components/ServiceList";
+import type { Microservice } from "./types";
 
-function App() {
+function MainApp() {
+  const authContext = useContext(AuthContext);
+  const [editing, setEditing] = useState<Microservice | null>(null);
+
   return (
-    <IncidentProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/incidents" element={<IncidentsPage />} />
-          <Route path="/" element={<Navigate to="/incidents" replace />} />
-        </Routes>
-      </BrowserRouter>
-    </IncidentProvider>
+    <main style={{ maxWidth: 900, margin: "30px auto", fontFamily: "Arial" }}>
+      <h1>It Service Requests Manager</h1>
+      {authContext?.state.isAuthenticated ? (
+        <>
+          <button onClick={() => authContext.dispatch({ type: "LOGOUT" })}>Sign Out</button>
+          <ServiceForm editing={editing} onDone={() => setEditing(null)} />
+          <hr />
+          <ServiceList onEdit={setEditing} />
+        </>
+      ) : (
+        <AuthForm />
+      )}
+    </main>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <AuthProvider>
+      <ServiceProvider>
+        <MainApp />
+      </ServiceProvider>
+    </AuthProvider>
+  );
+}
