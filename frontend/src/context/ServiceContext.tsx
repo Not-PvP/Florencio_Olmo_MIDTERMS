@@ -11,7 +11,7 @@ const initialState: State = {
   error: null,
 };
 
-function reducer(state: State, action: Action): State {
+function ServiceReducer(state: State, action: Action): State {
   switch (action.type) {
     case "SET_AUTH":
       localStorage.setItem('token', action.payload.token);
@@ -20,7 +20,7 @@ function reducer(state: State, action: Action): State {
       localStorage.removeItem("token",);
       return state;
     case "SET_ENV_FILTER":
-      return { ...state, selectedEnvironment: action.payload};
+      return { ...state, selectedEnvironment: action.payload}; // double check
     case "FETCH_SERVICES_SUCCESS":
       return { ...state, services: action.payload, loading: false, error: null };
     case "CREATE_SERVICE_SUCCESS":
@@ -40,19 +40,12 @@ function reducer(state: State, action: Action): State {
   }
 }
 
-const ServiceContext = createContext<
-  { state: State; dispatch: Dispatch<Action> } | undefined
->(undefined);
+export const ServiceContext = createContext<{ state: State; dispatch: Dispatch<Action> } | undefined>(undefined);
 
-export function ServiceProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  return (
-    <ServiceContext.Provider value={{ state, dispatch }}>
-      {children}
-    </ServiceContext.Provider>
-  );
-}
+export const ServiceProvider = ({ children }: { children: ReactNode }) => {
+  const [state, dispatch] = useReducer(ServiceReducer, initialState);
+  return <ServiceContext.Provider value={{ state, dispatch }}>{children}</ServiceContext.Provider>;
+};
 
 export function useServiceContext() {
   const ctx = useContext(ServiceContext);
