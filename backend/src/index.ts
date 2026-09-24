@@ -17,3 +17,12 @@ app.use("/api/auth", authRoutes);
 app.listen(PORT, () => {
   console.log(`IT Service Request API server running on http://localhost:${PORT}`);
 });
+
+declare global {
+  namespace Express {
+    interface Request {
+      user?: Record<string,any>
+    }
+  }
+}
+
