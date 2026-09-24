@@ -1,29 +1,10 @@
-export interface User {
-  id: string;
-  email: string;
-  passwordHash: string;
-  role: 'DEVELOPER' | 'LEAD';
-}
+import { Router } from "express";
+import authRoutes from "../authRoutes";
+import incidentRoutes from "./service.routes";
 
-export type Environment = 'DEVELOPMENT' | 'STAGING' | 'PRODUCTION';
-export type ServiceStatus = 'HEALTHY' | 'DEGRADED' | 'DOWN';
+const router = Router();
 
-export interface Microservice {
-id: string;
-name: string;
-endpointUrl: string;
-environment: Environment;
-status: ServiceStatus;
-version: string;
-ownerEmail: string;
-createdAt: string;
-}
+router.use("/auth", authRoutes);
+router.use("/service", incidentRoutes);
 
-export interface JwtPayload {
-  id: string;
-  email: string;
-}
-
-export interface AuthenticatedRequest extends Request {
-  user?: JwtPayload;
-}
+export default router;
