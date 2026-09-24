@@ -1,35 +1,48 @@
 import { z } from "zod";
 
-export const resourceBodySchema = z.object({
-    requester_name: z.string().min(1, "This field is required."),
-    title: z.string().min(1, "This field is required."),
-    description: z.string().min(1, "This field is required."),
-    priority: z.enum(["low", "medium", "high"]),
-    status: z.enum(["open", "in_progress", "resolved"]),
+export const incidentBodySchema = z.object({
+  title: z.string().min(3, "Title must at least be 3 characters."),
+  description: z.string().min(5, "Description must at least be 5 characters."),
+  severity: z
+    .enum(["low", "medium", "high", "critical"])
+    .optional()
+    .default("low"),
+  status: z
+    .enum(["open", "in_progress", "resolved"])
+    .optional()
+    .default("open"),
 });
 
-export const createItServiceRequestsSchema = z.object({
-  body: resourceBodySchema,
+// Create a wrapper schema for our generic Express middleware
+export const createIncidentSchema = z.object({
+  body: incidentBodySchema,
 });
 
-export const updateItServiceRequestsSchema = z.object({
-  body: resourceBodySchema.partial(),
+// PATCH only changes severity and/or status
+export const updateIncidentSchema = z.object({
+  body: incidentBodySchema.pick({ severity: true, status: true }).partial(),
   params: z.object({
-    id: z.string().regex(/^\d+$/, "ID must be a numeric string"),
+    id: z.uuid("ID must be a valid UUID"),
   }),
 });
 
-export const idSchema = z.object({
+// DELETE only needs a valid id (ids are UUIDs, so "123" would crash Postgres)
+export const incidentIdSchema = z.object({
   params: z.object({
-    id: z.string().regex(/^\d+$/, "ID must be a numeric string"),
+    id: z.uuid("ID must be a valid UUID"),
   }),
 });
+
+// Automatically infer TypeScript types from the Zod schemas
+export type IncidentInput = z.infer<typeof incidentBodySchema>;
 
 export const authBodySchema = z.object({
-  username: z.string().min(3, "Username must at least be 3 characters"),
-  password: z.string().min(6, "Password must at least be 6 characters"),
+  email: z.email("A valid email is required"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
 export const authRequestSchema = z.object({
   body: authBodySchema,
 });
+
+export type AuthInput = z.infer<typeof authBodySchema>;

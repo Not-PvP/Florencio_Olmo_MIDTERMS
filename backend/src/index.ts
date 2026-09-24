@@ -1,8 +1,8 @@
-import express from "express";
-import { ServiceRoutes } from "./ServiceRoutes.js";
-import dotenv from "dotenv";
-import authRoutes from "./authRoutes.js";
-import cors from "cors";
+import express from 'express';
+import serviceRoutes from './serviceRoutes';
+import dotenv from 'dotenv';
+import authRoutes from './authRoutes';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -11,18 +11,9 @@ app.use(cors());
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use("/api/it_service_requests", ServiceRoutes);
-app.use("/api/auth", authRoutes);
+app.use('/api/services', serviceRoutes);
+app.use('/api/auth', authRoutes);
 
 app.listen(PORT, () => {
-  console.log(`IT Service Request API server running on http://localhost:${PORT}`);
+  console.log(`PulseDesk API server running on http://localhost:${PORT}`);
 });
-
-declare global {
-  namespace Express {
-    interface Request {
-      user?: Record<string,any>
-    }
-  }
-}
-
