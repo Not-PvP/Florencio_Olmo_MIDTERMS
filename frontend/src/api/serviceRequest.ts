@@ -25,7 +25,7 @@ export const createService = async (item: Omit<Microservice, "id">): Promise<Mic
   return data;
 };
 
-export const updateService = async (id: number, item: Partial<Omit<Microservice, "id">>): Promise<Microservice> => {
+export const updateService = async (id: string, item: Partial<Omit<Microservice, "id">>): Promise<Microservice> => {
   const response = await fetch(`${API_BASE}/it_service_requests/${id}`, {
     method: "PUT", headers: getHeaders(), body: JSON.stringify(item),
   });
@@ -34,7 +34,7 @@ export const updateService = async (id: number, item: Partial<Omit<Microservice,
   return data;
 };
 
-export const deleteService = async (id: number): Promise<Microservice> => {
+export const deleteService = async (id: string): Promise<Microservice> => {
   const response = await fetch(`${API_BASE}/it_service_requests/${id}`, {
     method: "DELETE", headers: getHeaders(),
   });

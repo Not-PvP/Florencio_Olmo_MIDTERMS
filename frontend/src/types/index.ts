@@ -28,5 +28,6 @@ export type Action =
  | { type: 'CREATE_SERVICE_SUCCESS'; payload: Microservice }
  | { type: 'UPDATE_SERVICE_SUCCESS'; payload: Microservice }
  | { type: 'DELETE_SERVICE_SUCCESS'; payload: string }
- | { type: 'SET_ERROR'; payload: string | null };
+ | { type: 'SET_ERROR'; payload: string | null }
+ | { type: 'FETCH_START' };
 
