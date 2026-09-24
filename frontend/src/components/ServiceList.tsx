@@ -4,7 +4,7 @@ import { deleteService, fetchServiceRequests, updateService } from "../api/servi
 import type { Microservice } from "../types";
 import { Button, Card, Grid, Muted, Row, Select } from "./styles";
 
-export const IncidentList: React.FC = () => {
+export const ServiceList: React.FC = () => {
   const context = useContext(ServiceContext);
   if (!context) throw new Error("IncidentList must be used within an IncidentProvider.");
   const { state, dispatch } = context;
